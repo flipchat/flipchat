@@ -11,14 +11,14 @@ DROP TABLE IF EXISTS cs421g40.transaction;
 DROP TABLE IF EXISTS cs421g40.bid;
 DROP TABLE IF EXISTS cs421g40.product;
 DROP TABLE IF EXISTS cs421g40.category;
-DROP TABLE IF EXISTS cs421g40.user;
+DROP TABLE IF EXISTS cs421g40.users;
 
 
 ---
 --- Table structure for FlipChat
 ---
 
-CREATE TABLE cs421g40.user (
+CREATE TABLE cs421g40.users (
    email       VARCHAR(50)  NOT NULL,
    password    VARCHAR(20)  NOT NULL,
    full_name   VARCHAR(100) NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE cs421g40.category (
     user_count    INT NOT NULL default 0,
     email         VARCHAR(50) NOT NULL,
     PRIMARY KEY (cat_id),
-    FOREIGN KEY (email) REFERENCES cs421g40.user(email)
+    FOREIGN KEY (email) REFERENCES cs421g40.users(email)
 );
 
 CREATE TABLE cs421g40.product (
@@ -51,7 +51,7 @@ CREATE TABLE cs421g40.product (
     email       VARCHAR(50) NOT NULL,
     cat_id      INT NOT NULL,
     PRIMARY KEY(p_id),
-    FOREIGN KEY (email)  REFERENCES cs421g40.user(email),
+    FOREIGN KEY (email)  REFERENCES cs421g40.users(email),
     FOREIGN KEY (cat_id) REFERENCES cs421g40.category(cat_id)
 );
 
@@ -63,7 +63,7 @@ CREATE TABLE cs421g40.bid (
     p_id        INT NOT NULL,
     t_id        INT NOT NULL,
     PRIMARY KEY(bid_id),
-    FOREIGN KEY(email) REFERENCES cs421g40.user(email),
+    FOREIGN KEY(email) REFERENCES cs421g40.users(email),
     FOREIGN KEY(p_id)  REFERENCES cs421g40.product(p_id)
 );
 
@@ -85,7 +85,7 @@ CREATE TABLE cs421g40.notification(
     p_id      INT NOT NULL,
     t_id      INT NOT NULL,
     PRIMARY KEY(n_id),
-    FOREIGN KEY(email) REFERENCES cs421g40.user(email),
+    FOREIGN KEY(email) REFERENCES cs421g40.users(email),
     FOREIGN KEY(p_id)  REFERENCES cs421g40.product(p_id),
     FOREIGN KEY(t_id)  REFERENCES cs421g40.transaction(t_id)
 );
@@ -97,7 +97,7 @@ CREATE TABLE cs421g40.comment(
     email       VARCHAR(50) NOT NULL,
     p_id        INT NOT NULL,
     PRIMARY KEY(c_id),
-    FOREIGN KEY(email) REFERENCES cs421g40.user(email),
+    FOREIGN KEY(email) REFERENCES cs421g40.users(email),
     FOREIGN KEY(p_id)  REFERENCES cs421g40.product(p_id)
 );
 
@@ -114,12 +114,12 @@ CREATE TABLE cs421g40.user_achievements(
     a_id    INT NOT NULL,
     email   VARCHAR(50) NOT NULL,
     FOREIGN KEY(a_id)   REFERENCES cs421g40.achievement(a_id),
-    FOREIGN KEY(email)  REFERENCES cs421g40.user(email)
+    FOREIGN KEY(email)  REFERENCES cs421g40.users(email)
 );
 
 CREATE TABLE cs421g40.user_categories(
     cat_id  INT NOT NULL,
     email   VARCHAR(50) NOT NULL,
     FOREIGN KEY(cat_id) REFERENCES cs421g40.category(cat_id),
-    FOREIGN KEY(email)  REFERENCES cs421g40.user(email)
+    FOREIGN KEY(email)  REFERENCES cs421g40.users(email)
 );
