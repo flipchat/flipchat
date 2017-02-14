@@ -1,4 +1,4 @@
--- Populate users table with a real data set of 100 records
+-- Populate users table with a "real" data set of 100 records
 
 INSERT INTO users (email, password, full_name, address, admin_since) VALUES ('rbell0@1688.com', '27de001a76d471deb02764be1bef2e77e4e4b78e', 'Robert Bell', '05934 Vermont Place', null);
 INSERT INTO users (email, password, full_name, address, admin_since) VALUES ('rwheeler1@stumbleupon.com', '3b901da8403c814096dbf05e8071a158e6b3fec1', 'Ralph Wheeler', null, '2016-08-29');
