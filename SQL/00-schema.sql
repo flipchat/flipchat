@@ -20,10 +20,9 @@ DROP TABLE IF EXISTS cs421g40.users;
 CREATE TABLE cs421g40.users (
   u_id        SERIAL       NOT NULL,
   email       VARCHAR(50)  NOT NULL,
-  password    VARCHAR(20)  NOT NULL,
+  password    VARCHAR(255) NOT NULL,
   full_name   VARCHAR(100) NOT NULL,
   address     VARCHAR(100),
-  is_admin    BOOLEAN      NOT NULL DEFAULT FALSE,
   admin_since TIMESTAMP,
   PRIMARY KEY (u_id)
 );
