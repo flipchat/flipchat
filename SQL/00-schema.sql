@@ -24,7 +24,7 @@ CREATE TABLE cs421g40.users (
   full_name   VARCHAR(100) NOT NULL,
   address     VARCHAR(100),
   is_admin    BOOLEAN      NOT NULL DEFAULT FALSE,
-  admin_since TIMESTAMP    NOT NULL,
+  admin_since TIMESTAMP,
   PRIMARY KEY (u_id)
 );
 
