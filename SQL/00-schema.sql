@@ -43,7 +43,7 @@ CREATE TABLE cs421g40.product (
   title       VARCHAR(50) NOT NULL,
   description TEXT,
   price       MONEY       NOT NULL,
-  image       VARCHAR(50) NOT NULL,
+  image       VARCHAR(50),
   is_sold     BOOLEAN     NOT NULL DEFAULT FALSE,
   datetime    TIMESTAMP   NOT NULL,
   expiry      TIMESTAMP   NOT NULL,
@@ -61,7 +61,7 @@ CREATE TABLE cs421g40.bid (
   price    MONEY     NOT NULL,
   u_id     INT       NOT NULL,
   p_id     INT       NOT NULL,
-  t_id     INT       NOT NULL,
+  t_id     INT,
   PRIMARY KEY (bid_id),
   FOREIGN KEY (u_id) REFERENCES cs421g40.users (u_id),
   FOREIGN KEY (p_id) REFERENCES cs421g40.product (p_id)
@@ -74,6 +74,7 @@ CREATE TABLE cs421g40.transaction (
   u_id     INT       NOT NULL,
   bid_id   INT       NOT NULL,
   PRIMARY KEY (t_id),
+  FOREIGN KEY (u_id) REFERENCES cs421g40.users (u_id),
   FOREIGN KEY (bid_id) REFERENCES cs421g40.bid (bid_id)
 );
 
