@@ -1,7 +1,12 @@
+--
+-- COMP 421 - Submission 02
+-- Question 02
+-- Group 40
+--
+
 ---
 --- Clean DB
 ---
-
 DROP TABLE IF EXISTS cs421g40.user_achievements;
 DROP TABLE IF EXISTS cs421g40.user_categories;
 DROP TABLE IF EXISTS cs421g40.notification;
@@ -16,7 +21,6 @@ DROP TABLE IF EXISTS cs421g40.users;
 ---
 --- Table structure for FlipChat
 ---
-
 CREATE TABLE cs421g40.users (
   u_id        SERIAL       NOT NULL,
   email       VARCHAR(50)  NOT NULL,
@@ -102,7 +106,7 @@ CREATE TABLE cs421g40.comment (
 
 CREATE TABLE cs421g40.achievement (
   a_id        SERIAL      NOT NULL,
-  a_type      INT, -- 0-seller, 1-buyer
+  a_type      INT, -- 1 - seller, 2 - buyer, 3 - general
   label       VARCHAR(50) NOT NULL,
   condition   VARCHAR(50) NOT NULL,
   description TEXT        NOT NULL,

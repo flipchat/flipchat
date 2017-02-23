@@ -2,10 +2,10 @@ cs421=> SELECT * FROM achievement LIMIT 5;
  a_id | a_type |     label      |             condition             |              description
 ------+--------+----------------+-----------------------------------+----------------------------------------
     1 |      1 | First Post     | Post a product                    | You have posted your first product!
-    2 |      1 | First Purchase | Purchase a product                | You have purchased your first product!
+    2 |      2 | First Purchase | Purchase a product                | You have purchased your first product!
     3 |      1 | First Sale     | Close a sale                      | You have sold your first product!
-    4 |      1 | Organized      | Follow a category                 | You have followed your first category!
-    5 |      2 | Popular        | Receive 100 messages and comments | You are popular!
+    4 |      3 | Organized      | Follow a category                 | You have followed your first category!
+    5 |      3 | Popular        | Receive 100 messages and comments | You are popular!
 (5 rows)
 
 
