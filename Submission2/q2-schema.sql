@@ -102,7 +102,7 @@ CREATE TABLE cs421g40.comment (
 
 CREATE TABLE cs421g40.achievement (
   a_id        SERIAL      NOT NULL,
-  a_type      INT, -- 0-seller, 1-buyer, 2-wtv
+  a_type      INT, -- 0-seller, 1-buyer
   label       VARCHAR(50) NOT NULL,
   condition   VARCHAR(50) NOT NULL,
   description TEXT        NOT NULL,

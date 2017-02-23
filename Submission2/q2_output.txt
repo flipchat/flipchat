@@ -1,0 +1,171 @@
+cs421-> cs421-> \d users
+                                      Table "cs421g40.users"
+   Column    |            Type             |                      Modifiers
+-------------+-----------------------------+------------------------------------------------------
+ u_id        | integer                     | not null default nextval('users_u_id_seq'::regclass)
+ email       | character varying(50)       | not null
+ password    | character varying(255)      | not null
+ full_name   | character varying(100)      | not null
+ address     | character varying(100)      |
+ admin_since | timestamp without time zone |
+Indexes:
+    "users_pkey" PRIMARY KEY, btree (u_id)
+Referenced by:
+    TABLE "bid" CONSTRAINT "bid_u_id_fkey" FOREIGN KEY (u_id) REFERENCES users(u_id)
+    TABLE "category" CONSTRAINT "category_created_by_fkey" FOREIGN KEY (created_by) REFERENCES users(u_id)
+    TABLE "comment" CONSTRAINT "comment_u_id_fkey" FOREIGN KEY (u_id) REFERENCES users(u_id)
+    TABLE "product" CONSTRAINT "product_u_id_fkey" FOREIGN KEY (u_id) REFERENCES users(u_id)
+    TABLE "transaction" CONSTRAINT "transaction_u_id_fkey" FOREIGN KEY (u_id) REFERENCES users(u_id)
+    TABLE "user_achievements" CONSTRAINT "user_achievements_u_id_fkey" FOREIGN KEY (u_id) REFERENCES users(u_id)
+    TABLE "user_categories" CONSTRAINT "user_categories_u_id_fkey" FOREIGN KEY (u_id) REFERENCES users(u_id)
+
+
+cs421-> \d user_categories
+Table "cs421g40.user_categories"
+ Column |  Type   | Modifiers
+--------+---------+-----------
+ cat_id | integer | not null
+ u_id   | integer | not null
+Foreign-key constraints:
+    "user_categories_cat_id_fkey" FOREIGN KEY (cat_id) REFERENCES category(cat_id)
+    "user_categories_u_id_fkey" FOREIGN KEY (u_id) REFERENCES users(u_id)
+
+
+cs421-> \d user_achievements
+Table "cs421g40.user_achievements"
+ Column |  Type   | Modifiers
+--------+---------+-----------
+ a_id   | integer | not null
+ u_id   | integer | not null
+Foreign-key constraints:
+    "user_achievements_a_id_fkey" FOREIGN KEY (a_id) REFERENCES achievement(a_id)
+    "user_achievements_u_id_fkey" FOREIGN KEY (u_id) REFERENCES users(u_id)
+
+
+cs421-> cs421-> \d transaction
+                                    Table "cs421g40.transaction"
+  Column  |            Type             |                         Modifiers
+----------+-----------------------------+------------------------------------------------------------
+ t_id     | integer                     | not null default nextval('transaction_t_id_seq'::regclass)
+ paid     | boolean                     | not null default false
+ datetime | timestamp without time zone | not null
+ u_id     | integer                     | not null
+ bid_id   | integer                     | not null
+Indexes:
+    "transaction_pkey" PRIMARY KEY, btree (t_id)
+Foreign-key constraints:
+    "transaction_bid_id_fkey" FOREIGN KEY (bid_id) REFERENCES bid(bid_id)
+    "transaction_u_id_fkey" FOREIGN KEY (u_id) REFERENCES users(u_id)
+Referenced by:
+    TABLE "notification" CONSTRAINT "notification_t_id_fkey" FOREIGN KEY (t_id) REFERENCES transaction(t_id)
+
+
+cs421-> \d product
+                                      Table "cs421g40.product"
+   Column    |            Type             |                       Modifiers
+-------------+-----------------------------+--------------------------------------------------------
+ p_id        | integer                     | not null default nextval('product_p_id_seq'::regclass)
+ title       | character varying(50)       | not null
+ description | text                        |
+ price       | money                       | not null
+ image       | character varying(50)       |
+ is_sold     | boolean                     | not null default false
+ datetime    | timestamp without time zone | not null
+ expiry      | timestamp without time zone | not null
+ u_id        | integer                     | not null
+ cat_id      | integer                     | not null
+ bid_id      | integer                     |
+Indexes:
+    "product_pkey" PRIMARY KEY, btree (p_id)
+Foreign-key constraints:
+    "product_cat_id_fkey" FOREIGN KEY (cat_id) REFERENCES category(cat_id)
+    "product_u_id_fkey" FOREIGN KEY (u_id) REFERENCES users(u_id)
+Referenced by:
+    TABLE "bid" CONSTRAINT "bid_p_id_fkey" FOREIGN KEY (p_id) REFERENCES product(p_id)
+    TABLE "comment" CONSTRAINT "comment_p_id_fkey" FOREIGN KEY (p_id) REFERENCES product(p_id)
+    TABLE "notification" CONSTRAINT "notification_p_id_fkey" FOREIGN KEY (p_id) REFERENCES product(p_id)
+
+
+cs421-> \d notification
+                          Table "cs421g40.notification"
+ Column  |  Type   |                          Modifiers
+---------+---------+-------------------------------------------------------------
+ n_id    | integer | not null default nextval('notification_n_id_seq'::regclass)
+ content | text    | not null
+ type    | integer |
+ p_id    | integer |
+ t_id    | integer |
+Indexes:
+    "notification_pkey" PRIMARY KEY, btree (n_id)
+Foreign-key constraints:
+    "notification_p_id_fkey" FOREIGN KEY (p_id) REFERENCES product(p_id)
+    "notification_t_id_fkey" FOREIGN KEY (t_id) REFERENCES transaction(t_id)
+
+
+cs421-> \d comment
+                                    Table "cs421g40.comment"
+  Column  |            Type             |                       Modifiers
+----------+-----------------------------+--------------------------------------------------------
+ c_id     | integer                     | not null default nextval('comment_c_id_seq'::regclass)
+ content  | text                        | not null
+ datetime | timestamp without time zone | not null
+ u_id     | integer                     | not null
+ p_id     | integer                     | not null
+Indexes:
+    "comment_pkey" PRIMARY KEY, btree (c_id)
+Foreign-key constraints:
+    "comment_p_id_fkey" FOREIGN KEY (p_id) REFERENCES product(p_id)
+    "comment_u_id_fkey" FOREIGN KEY (u_id) REFERENCES users(u_id)
+
+
+cs421-> \d category
+                                     Table "cs421g40.category"
+    Column     |         Type          |                         Modifiers
+---------------+-----------------------+-----------------------------------------------------------
+ cat_id        | integer               | not null default nextval('category_cat_id_seq'::regclass)
+ name          | character varying(50) | not null
+ description   | text                  |
+ product_count | integer               | not null default 0
+ user_count    | integer               | not null default 0
+ created_by    | integer               | not null
+Indexes:
+    "category_pkey" PRIMARY KEY, btree (cat_id)
+Foreign-key constraints:
+    "category_created_by_fkey" FOREIGN KEY (created_by) REFERENCES users(u_id)
+Referenced by:
+    TABLE "product" CONSTRAINT "product_cat_id_fkey" FOREIGN KEY (cat_id) REFERENCES category(cat_id)
+    TABLE "user_categories" CONSTRAINT "user_categories_cat_id_fkey" FOREIGN KEY (cat_id) REFERENCES category(cat_id)
+
+
+cs421-> \d bid
+                                     Table "cs421g40.bid"
+  Column  |            Type             |                      Modifiers
+----------+-----------------------------+------------------------------------------------------
+ bid_id   | integer                     | not null default nextval('bid_bid_id_seq'::regclass)
+ datetime | timestamp without time zone | not null
+ price    | money                       | not null
+ u_id     | integer                     | not null
+ p_id     | integer                     | not null
+ t_id     | integer                     |
+Indexes:
+    "bid_pkey" PRIMARY KEY, btree (bid_id)
+Foreign-key constraints:
+    "bid_p_id_fkey" FOREIGN KEY (p_id) REFERENCES product(p_id)
+    "bid_u_id_fkey" FOREIGN KEY (u_id) REFERENCES users(u_id)
+Referenced by:
+    TABLE "transaction" CONSTRAINT "transaction_bid_id_fkey" FOREIGN KEY (bid_id) REFERENCES bid(bid_id)
+
+
+cs421-> \d achievement
+                                   Table "cs421g40.achievement"
+   Column    |         Type          |                         Modifiers
+-------------+-----------------------+------------------------------------------------------------
+ a_id        | integer               | not null default nextval('achievement_a_id_seq'::regclass)
+ a_type      | integer               |
+ label       | character varying(50) | not null
+ condition   | character varying(50) | not null
+ description | text                  | not null
+Indexes:
+    "achievement_pkey" PRIMARY KEY, btree (a_id)
+Referenced by:
+    TABLE "user_achievements" CONSTRAINT "user_achievements_a_id_fkey" FOREIGN KEY (a_id) REFERENCES achievement(a_id)
