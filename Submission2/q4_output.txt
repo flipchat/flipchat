@@ -1,0 +1,108 @@
+cs421=> SELECT * FROM achievement LIMIT 5;
+ a_id | a_type |     label      |             condition             |              description
+------+--------+----------------+-----------------------------------+----------------------------------------
+    1 |      1 | First Post     | Post a product                    | You have posted your first product!
+    2 |      1 | First Purchase | Purchase a product                | You have purchased your first product!
+    3 |      1 | First Sale     | Close a sale                      | You have sold your first product!
+    4 |      1 | Organized      | Follow a category                 | You have followed your first category!
+    5 |      2 | Popular        | Receive 100 messages and comments | You are popular!
+(5 rows)
+
+
+cs421=> SELECT * FROM bid LIMIT 5;
+ bid_id |      datetime       |  price  | u_id | p_id | t_id
+--------+---------------------+---------+------+------+------
+      3 | 2016-08-11 00:00:00 | $241.10 |   28 |   39 |
+      4 | 2016-07-22 00:00:00 | $129.74 |   16 |    5 |
+      5 | 2016-09-26 00:00:00 |  $21.82 |   78 |   85 |
+      6 | 2016-12-07 00:00:00 |  $53.68 |   20 |   31 |
+      7 | 2016-11-30 00:00:00 | $154.37 |   59 |   14 |
+(5 rows)
+
+
+cs421=> SELECT * FROM category LIMIT 5;
+ cat_id |      name      |           description            | product_count | user_count | created_by
+--------+----------------+----------------------------------+---------------+------------+------------
+      1 | Electronics    | Front-line transitional extranet |             4 |          0 |          2
+      2 | Home           | Proactive real-time productivity |             8 |          0 |         87
+      5 | Sporting Goods | Digitized exuding contingency    |             8 |          0 |         15
+      9 | Accessories    | Monitored human-resource portal  |            14 |          0 |         70
+     10 | Art            | Secured reciprocal synergy       |             9 |          0 |         25
+(5 rows)
+
+
+cs421=> SELECT * FROM comment LIMIT 5;
+ c_id |           content            |          datetime          | u_id | p_id
+------+------------------------------+----------------------------+------+------
+    1 | Interested                   | 2017-02-23 11:03:41.139497 |    3 |    8
+    2 | Looks great                  | 2017-02-23 11:03:41.359881 |   74 |   95
+    3 | Can you ship to Canada?      | 2017-02-23 11:03:41.426979 |   33 |   57
+    4 | How old is it?               | 2017-02-23 11:03:41.46687  |   74 |   95
+    5 | I can vouch for this seller! | 2017-02-23 11:03:41.516988 |   61 |   41
+(5 rows)
+
+
+cs421=> SELECT * FROM notification LIMIT 5;
+ n_id | content | type | p_id | t_id
+------+---------+------+------+------
+    1 | comment |    0 |    8 |
+    2 | comment |    0 |   95 |
+    3 | comment |    0 |   57 |
+    4 | comment |    0 |   95 |
+    5 | comment |    0 |   41 |
+(5 rows)
+
+
+cs421=> SELECT * FROM product LIMIT 5;
+ p_id |    title    |               description                |  price  |                      image                      | is_sold |      datetime       |       expiry        | u_id | cat_id | bid_id
+------+-------------+------------------------------------------+---------+-------------------------------------------------+---------+---------------------+---------------------+------+--------+--------
+    5 | Persistent  | Self-enabling regional internet solution | $124.51 | http://dummyimage.com/250x250.jpg/cc0000/ffffff | f       | 2017-01-06 00:00:00 | 2016-07-08 00:00:00 |   21 |      3 |
+    6 | migration   | Advanced upward-trending architecture    | $159.31 | http://dummyimage.com/250x250.jpg/dddddd/000000 | f       | 2017-01-16 00:00:00 | 2016-02-10 00:00:00 |   53 |      7 |
+    7 | database    | Networked 3rd generation support         |  $56.84 | http://dummyimage.com/250x250.jpg/cc0000/ffffff | f       | 2016-04-02 00:00:00 | 2016-06-11 00:00:00 |   24 |      5 |
+    9 | Centralized | Team-oriented stable workforce           |  $69.62 | http://dummyimage.com/250x250.jpg/dddddd/000000 | f       | 2017-01-16 00:00:00 | 2016-09-07 00:00:00 |   26 |      6 |
+   10 | multi-state | Profit-focused systemic moratorium       | $136.39 | http://dummyimage.com/250x250.jpg/ff4444/ffffff | f       | 2016-02-11 00:00:00 | 2016-12-07 00:00:00 |   29 |      3 |
+(5 rows)
+
+
+cs421=> SELECT * FROM transaction LIMIT 5;
+ t_id | paid |          datetime          | u_id | bid_id
+------+------+----------------------------+------+--------
+    1 | f    | 2017-02-23 12:02:54.088114 |   14 |     50
+    2 | t    | 2017-02-23 12:02:54.178938 |    4 |     71
+    3 | t    | 2017-02-23 12:02:54.215874 |   26 |      9
+    4 | f    | 2017-02-23 12:02:54.26305  |   96 |     46
+    5 | f    | 2017-02-23 12:02:54.302941 |    9 |    104
+(5 rows)
+
+
+cs421=> SELECT * FROM user_achievements LIMIT 5;
+ a_id | u_id
+------+------
+    3 |   86
+    2 |   20
+    2 |   15
+    1 |   84
+    4 |    6
+(5 rows)
+
+
+cs421=> SELECT * FROM user_categories LIMIT 5;
+ cat_id | u_id
+--------+------
+      8 |   45
+      4 |   77
+      7 |   24
+      6 |   36
+      3 |   60
+(5 rows)
+
+
+cs421=> SELECT * FROM users LIMIT 5;
+ u_id |           email           |                 password                 |    full_name     |        address        |     admin_since
+------+---------------------------+------------------------------------------+------------------+-----------------------+---------------------
+    1 | rbell0@1688.com           | 27de001a76d471deb02764be1bef2e77e4e4b78e | Robert Bell      | 05934 Vermont Place   |
+    2 | rwheeler1@stumbleupon.com | 3b901da8403c814096dbf05e8071a158e6b3fec1 | Ralph Wheeler    |                       | 2016-08-29 00:00:00
+    3 | msims2@linkedin.com       | 5bb18bc40522f97d7161cd1c2a33e15a50c9e36d | Mark Sims        |                       |
+    4 | cgibson3@macromedia.com   | 71cd4fbf87cb0a7b98d3b982edfd1eb4e319ac73 | Christina Gibson | 8 Independence Center |
+    5 | ksnyder4@jugem.jp         | 29e22567a08a5df2552d61652a16b7ca90c05f3c | Kathryn Snyder   | 8349 Pankratz Circle  | 2016-09-10 00:00:00
+(5 rows)
