@@ -56,3 +56,14 @@ INSERT INTO notification (content, type, p_id, t_id) VALUES ('bid', 0, 27, NULL)
 INSERT INTO notification (content, type, p_id, t_id) VALUES ('bid', 0, 42, NULL);
 INSERT INTO notification (content, type, p_id, t_id) VALUES ('bid', 0, 87, NULL);
 
+SELECT * FROM achievement LIMIT 5;
+SELECT * FROM bid LIMIT 5;
+SELECT * FROM category LIMIT 5;
+SELECT * FROM comment LIMIT 5;
+SELECT * FROM notification LIMIT 5;
+SELECT * FROM product LIMIT 5;
+SELECT * FROM transaction LIMIT 5;
+SELECT * FROM user_achievements LIMIT 5;
+SELECT * FROM user_categories LIMIT 5;
+SELECT * FROM users LIMIT 5;
+
