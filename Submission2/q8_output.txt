@@ -1,0 +1,50 @@
+cs421=> ALTER TABLE product ADD CONSTRAINT chk_Price CHECK (price::numeric >= 0);
+ALTER TABLE
+
+cs421=> \d product
+                                      Table "cs421g40.product"
+   Column    |            Type             |                       Modifiers
+-------------+-----------------------------+--------------------------------------------------------
+ p_id        | integer                     | not null default nextval('product_p_id_seq'::regclass)
+ title       | character varying(50)       | not null
+ description | text                        |
+ price       | money                       | not null
+ image       | character varying(50)       |
+ is_sold     | boolean                     | not null default false
+ datetime    | timestamp without time zone | not null
+ expiry      | timestamp without time zone | not null
+ u_id        | integer                     | not null
+ cat_id      | integer                     | not null
+ bid_id      | integer                     |
+Indexes:
+    "product_pkey" PRIMARY KEY, btree (p_id)
+Check constraints:
+    "chk_price" CHECK (price::numeric >= 0::numeric)
+Foreign-key constraints:
+    "product_cat_id_fkey" FOREIGN KEY (cat_id) REFERENCES category(cat_id)
+    "product_u_id_fkey" FOREIGN KEY (u_id) REFERENCES users(u_id)
+Referenced by:
+    TABLE "bid" CONSTRAINT "bid_p_id_fkey" FOREIGN KEY (p_id) REFERENCES product(p_id)
+    TABLE "comment" CONSTRAINT "comment_p_id_fkey" FOREIGN KEY (p_id) REFERENCES product(p_id)
+    TABLE "notification" CONSTRAINT "notification_p_id_fkey" FOREIGN KEY (p_id) REFERENCES product(p_id)
+
+cs421=> ALTER TABLE comment ADD CONSTRAINT chk_Date CHECK (datetime <= now());
+ALTER TABLE
+
+cs421=> \d comment
+                                    Table "cs421g40.comment"
+  Column  |            Type             |                       Modifiers
+----------+-----------------------------+--------------------------------------------------------
+ c_id     | integer                     | not null default nextval('comment_c_id_seq'::regclass)
+ content  | text                        | not null
+ datetime | timestamp without time zone | not null
+ u_id     | integer                     | not null
+ p_id     | integer                     | not null
+Indexes:
+    "comment_pkey" PRIMARY KEY, btree (c_id)
+Check constraints:
+    "chk_date" CHECK (datetime <= now())
+Foreign-key constraints:
+    "comment_p_id_fkey" FOREIGN KEY (p_id) REFERENCES product(p_id)
+    "comment_u_id_fkey" FOREIGN KEY (u_id) REFERENCES users(u_id)
+
