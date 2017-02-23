@@ -48,3 +48,12 @@ Foreign-key constraints:
     "comment_p_id_fkey" FOREIGN KEY (p_id) REFERENCES product(p_id)
     "comment_u_id_fkey" FOREIGN KEY (u_id) REFERENCES users(u_id)
 
+
+cs421=> INSERT INTO product (title, description, price, image, is_sold, datetime, expiry, u_id, cat_id, bid_id) VALUES ('Bread', 'Barely used, pickup only', '-$123', NULL, 'false', '2017-02-23 13:13:13', '2017-02-28 13:13:13', 93, 8, NULL);
+ERROR:  new row for relation "product" violates check constraint "chk_price"
+DETAIL:  Failing row contains (105, Bread, Barely used, pickup only, -$123.00, null, f, 2017-02-23 13:13:13, 2017-02-28 13:13:13, 93, 8, null).
+
+
+cs421=> INSERT INTO comment (content, datetime, u_id, p_id) VALUES ('I want bread some bread from the past!', '2019-02-23 13:13:13', 61, 41);
+ERROR:  new row for relation "comment" violates check constraint "chk_date"
+DETAIL:  Failing row contains (6, I want bread some bread from the past!, 2019-02-23 13:13:13, 61, 41).
