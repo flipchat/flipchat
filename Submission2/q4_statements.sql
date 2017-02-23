@@ -1,5 +1,9 @@
 --
--- Note: insert statements for users, category, product and bid tables are in file q9_statements.sql
+-- COMP 421 - Submission 02
+-- Question 04
+-- Group 40
+--
+-- Note: insert statements for 'users', 'category', 'product' and 'bid' tables are in file q9_statements.sql
 --
 
 -- Insert 5 achievements
