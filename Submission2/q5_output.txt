@@ -1,0 +1,68 @@
+ cs421=> SELECT * FROM users, category WHERE users.u_id = category.created_by;
+    full_name
+-----------------
+ Ralph Wheeler
+ Judith Burns
+ Annie Ortiz
+ Andrea Black
+ Victor Baker
+ Keith Cole
+ Virginia Barnes
+ Jesse Vasquez
+ Jesse Vasquez
+ Kimberly Murphy
+(10 rows)
+
+
+cs421=> SELECT COUNT(*) AS paid_transaction_notifications FROM notification, transaction WHERE notification.t_id = transaction.t_id AND transaction.paid = TRUE;
+ paid_transaction_notifications
+--------------------------------
+                              2
+(1 row)
+
+
+cs421=> SELECT users.full_name, comment.content FROM users, comment WHERE users.u_id = comment.u_id AND users.full_name LIKE '%i%';
+   full_name   |           content
+---------------+------------------------------
+ Mark Sims     | Interested
+ Doris Welch   | Looks great
+ Linda King    | Can you ship to Canada?
+ Doris Welch   | How old is it?
+ Robert Little | I can vouch for this seller!
+(5 rows)
+
+
+cs421=> SELECT bid.bid_id, product.title, product.price FROM bid, product WHERE bid.p_id = product.p_id AND product.price::numeric < ( SELECT AVG(price::numeric) FROM product LIMIT 30;
+ bid_id |        title        |  price
+--------+---------------------+---------
+      3 | Robust              | $100.46
+      4 | Persistent          | $124.51
+      6 | data-warehouse      |  $58.48
+      8 | logistical          |  $77.68
+     15 | solution            |  $35.21
+     16 | pricing structure   |  $11.97
+     18 | Centralized         |  $69.62
+     23 | solution            |  $35.21
+     24 | high-level          |  $23.20
+     26 | approach            |  $32.56
+     27 | encryption          |  $40.10
+     29 | zero administration |  $32.09
+     31 | Enterprise-wide     |  $39.90
+     32 | multi-state         | $136.39
+     34 | solution            |  $35.21
+     36 | Object-based        | $135.53
+     37 | info-mediaries      | $134.04
+     42 | Robust              | $100.46
+     43 | Enterprise-wide     |  $39.90
+     51 | fresh-thinking      |  $58.96
+     52 | Quality-focused     | $112.28
+     55 | info-mediaries      | $134.04
+     56 | zero administration |  $32.09
+     57 | Public-key          |  $58.58
+     64 | Automated           |  $80.23
+     65 | database            |  $56.84
+     66 | scalable            |  $36.48
+     69 | knowledge user      |  $95.21
+     72 | superstructure      |  $74.39
+     77 | pricing structure   |  $11.97
+(30 rows)

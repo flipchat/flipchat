@@ -49,7 +49,7 @@ CREATE TABLE cs421g40.product (
   expiry      TIMESTAMP   NOT NULL,
   u_id        INT         NOT NULL,
   cat_id      INT         NOT NULL,
-  bid_id      INT,
+  bid_id      INT, -- TODO: rename to winning_bid
   PRIMARY KEY (p_id),
   FOREIGN KEY (u_id) REFERENCES cs421g40.users (u_id),
   FOREIGN KEY (cat_id) REFERENCES cs421g40.category (cat_id)
