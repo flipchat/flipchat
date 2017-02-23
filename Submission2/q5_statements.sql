@@ -21,3 +21,8 @@ WHERE bid.p_id = product.p_id AND product.price::numeric < (
   SELECT AVG(price::numeric) FROM product
 ) LIMIT 30;
 
+-- Outputs a mapping between achievement types and the number of achievements that have this type
+
+SELECT achievement.a_type, COUNT(*) as type_count
+FROM achievement
+GROUP BY achievement.a_type;
