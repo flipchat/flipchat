@@ -9,10 +9,10 @@
 -- Insert 5 achievements
 
 INSERT INTO achievement (a_type, label, condition, description) VALUES (1, 'First Post', 'Post a product', 'You have posted your first product!');
-INSERT INTO achievement (a_type, label, condition, description) VALUES (1, 'First Purchase', 'Purchase a product', 'You have purchased your first product!');
+INSERT INTO achievement (a_type, label, condition, description) VALUES (2, 'First Purchase', 'Purchase a product', 'You have purchased your first product!');
 INSERT INTO achievement (a_type, label, condition, description) VALUES (1, 'First Sale', 'Close a sale', 'You have posted sold first product!');
-INSERT INTO achievement (a_type, label, condition, description) VALUES (1, 'Organized', 'Follow a category', 'You have followed your first category!');
-INSERT INTO achievement (a_type, label, condition, description) VALUES (2, 'Popular', 'Receive 100 messages and comments', 'You are popular!');
+INSERT INTO achievement (a_type, label, condition, description) VALUES (3, 'Organized', 'Follow a category', 'You have followed your first category!');
+INSERT INTO achievement (a_type, label, condition, description) VALUES (3, 'Popular', 'Receive 100 messages and comments', 'You are popular!');
 
 -- Insert 5 comments
 
