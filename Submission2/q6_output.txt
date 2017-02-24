@@ -1,5 +1,5 @@
-cs421=> INSERT INTO user_achievements (SELECT distinct 4 as a_id, user_categories.u_id FROM user_categories);
-INSERT 0 5
+cs421=> DELETE FROM user_achievements WHERE u_id IN (SELECT t.u_id FROM transaction t WHERE paid = false);
+DELETE 2
 
 cs421=> UPDATE category SET product_count = (SELECT COUNT(*) FROM product WHERE product.cat_id = category.cat_id);
 UPDATE 10
