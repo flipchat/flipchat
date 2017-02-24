@@ -1,0 +1,11 @@
+cs421=> INSERT INTO user_achievements (SELECT distinct 4 as a_id, user_categories.u_id FROM user_categories);
+INSERT 0 5
+
+cs421=> UPDATE category SET product_count = (SELECT COUNT(*) FROM product WHERE product.cat_id = category.cat_id);
+UPDATE 10
+
+cs421=> UPDATE product SET is_sold = true WHERE bid_id IN (SELECT t.bid_id FROM transaction t WHERE paid = true);
+UPDATE 3
+
+cs421=> INSERT INTO notification (content, type, p_id, t_id) (SELECT 'transaction' as content, 0 as type, p.p_id, t.t_id FROM product p, transaction t WHERE p.bid_id = t.bid_id AND p.is_sold = true);
+INSERT 0 3

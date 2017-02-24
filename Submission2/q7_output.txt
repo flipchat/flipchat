@@ -1,0 +1,31 @@
+cs421=> CREATE VIEW avg_price_category (cat_id, avg_price) AS SELECT cat_id, AVG (price::numeric) AS avg_price FROM product GROUP BY cat_id;
+CREATE VIEW
+
+cs421=> CREATE VIEW max_bid (p_id, price) AS SELECT p_id, MAX(price::numeric) AS price FROM bid GROUP BY p_id;
+CREATE VIEW
+
+cs421=> SELECT cat_id, avg_price FROM avg_price_category WHERE avg_price = (SELECT MIN (avg_price) FROM avg_price_category);
+ cat_id |      avg_price
+--------+----------------------
+      4 | 121.1121428571428571
+(1 row)
+
+cs421=> SELECT p_id, price FROM max_bid WHERE price > (SELECT AVG (price) FROM max_bid) LIMIT 5;
+ p_id | price
+------+--------
+   43 | 201.04
+   32 | 255.51
+   25 | 242.03
+    8 | 293.81
+   58 | 245.46
+(5 rows)
+
+cs421=> UPDATE avg_price_category SET avg_price = 123.45 WHERE cat_id = 2;
+ERROR:  cannot update view "avg_price_category"
+DETAIL:  Views containing GROUP BY are not automatically updatable.
+HINT:  To enable updating the view, provide an INSTEAD OF UPDATE trigger or an unconditional ON UPDATE DO INSTEAD rule.
+
+cs421=> UPDATE max_bid SET price = 123.45 WHERE p_id = 2;
+ERROR:  cannot update view "max_bid"
+DETAIL:  Views containing GROUP BY are not automatically updatable.
+HINT:  To enable updating the view, provide an INSTEAD OF UPDATE trigger or an unconditional ON UPDATE DO INSTEAD rule.

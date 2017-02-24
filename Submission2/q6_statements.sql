@@ -1,4 +1,3 @@
-
 --
 -- COMP 421 - Submission 02
 -- Question 06
