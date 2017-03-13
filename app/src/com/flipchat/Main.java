@@ -1,11 +1,24 @@
 package com.flipchat;
 
-import java.util.Objects;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
+
+        Connection conn = null;
+
+        try {
+            String url = "dburl";
+            String user = "username";
+            String pass = "password";
+            conn = DriverManager.getConnection(url, user, pass);
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
 
         while(true) {
             System.out.println("Please choose an option: ");
@@ -25,7 +38,12 @@ public class Main {
                     addProduct();
                     break;
                 case 3:
-                    showCategories();
+                        Category c = new Category(conn);
+                        ArrayList<Category> categories = c.getCategories();
+                        System.out.println("List of categories:");
+                        for(Category cat : categories) {
+                            System.out.println(cat.getName());
+                        }
                     break;
                 case 4:
                     showProducts(1);
