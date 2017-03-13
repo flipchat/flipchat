@@ -19,7 +19,6 @@ public class Main {
             System.out.println(e);
         }
 
-
         while(true) {
             System.out.println("Please choose an option: ");
             System.out.println("1) Add category");
@@ -32,10 +31,10 @@ public class Main {
             int n = reader.nextInt();
             switch (n) {
                 case 1:
-                    addCategory();
+                    // todo
                     break;
                 case 2:
-                    addProduct();
+                    // todo
                     break;
                 case 3:
                         Category c = new Category(conn);
@@ -46,10 +45,10 @@ public class Main {
                         }
                     break;
                 case 4:
-                    showProducts(1);
+                    // todo
                     break;
                 case 5:
-                    placeBid(1, 10.1f);
+                    // todo
                     break;
                 case 6:
                     System.exit(0);
@@ -58,27 +57,6 @@ public class Main {
                     System.out.println("Invalid action, please choose an action from 1 to 6");
             }
         }
-
-    }
-
-    public static void addCategory() {
-
-    }
-
-    public static void addProduct() {
-
-    }
-
-    public static Object showCategories() {
-        return null;
-    }
-
-    public static Object showProducts(int category) {
-        return null;
-
-    }
-
-    public static void placeBid(int productID, float amount) {
 
     }
 }
