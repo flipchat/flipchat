@@ -13,14 +13,9 @@ public class Category {
     private String description;
     private int productCount;
     private int userCount;
-    private Connection conn;
 
     public Category() {
         super();
-    }
-
-    public Category(Connection conn) {
-        this.conn = conn;
     }
 
     public long getCatID() {
@@ -63,28 +58,5 @@ public class Category {
         this.userCount = userCount;
     }
 
-    public ArrayList<Category> getCategories() {
 
-        ArrayList<Category> results = new ArrayList<>();
-        String selectSQL = "SELECT * FROM category";
-
-        try (
-                PreparedStatement pStatement =  conn.prepareStatement(selectSQL);
-                ResultSet resultSet = pStatement.executeQuery()
-        ) {
-            while (resultSet.next()) {
-                Category cat = new Category();
-                cat.setCatID(resultSet.getLong("cat_id"));
-                cat.setName(resultSet.getString("name"));
-                cat.setDescription(resultSet.getString("description"));
-                cat.setProductCount(resultSet.getInt("product_count"));
-                cat.setUserCount(resultSet.getInt("user_count"));
-                results.add(cat);
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-
-        return results;
-    }
 }
