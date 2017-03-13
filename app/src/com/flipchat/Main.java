@@ -1,7 +1,9 @@
 package com.flipchat;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Properties;
 import java.util.Scanner;
 
 public class Main {
@@ -11,12 +13,20 @@ public class Main {
         Connection conn = null;
 
         try {
-            String url = "dburl";
-            String user = "username";
-            String pass = "password";
+
+            Properties config = new Properties();
+            config.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("config.properties"));
+
+            String url = config.getProperty("url");
+            String user = config.getProperty("user");
+            String pass = config.getProperty("pass");
+
             conn = DriverManager.getConnection(url, user, pass);
         } catch (SQLException e) {
             System.out.println(e);
+        } catch (IOException e) {
+            System.out.println("Make sure you have a config.properties file with correct URL, username and password!");
+            e.printStackTrace();
         }
 
         while(true) {
