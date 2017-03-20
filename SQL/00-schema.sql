@@ -81,7 +81,7 @@ CREATE TABLE cs421g40.transaction (
 CREATE TABLE cs421g40.notification (
   n_id    SERIAL NOT NULL,
   content TEXT   NOT NULL,
-  type    INT, -- 0-transaction, 1-new product, 2-comment
+  type    INT, -- 0-transaction, 1-new product, 2-comment, 3-bid
   p_id    INT,
   t_id    INT,
   PRIMARY KEY (n_id),
