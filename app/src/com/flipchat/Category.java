@@ -1,8 +1,5 @@
 package com.flipchat;
 
-import java.sql.*;
-import java.util.ArrayList;
-
 /**
  * Created by Alister on 2017-03-12.
  */

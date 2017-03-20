@@ -24,6 +24,10 @@ public class Product {
         super();
     }
 
+    public Product(long pid) {
+        this.pid = pid;
+    }
+
     public long getPid() {
         return pid;
     }
@@ -110,5 +114,22 @@ public class Product {
 
     public void setBidID(long bidID) {
         this.bidID = bidID;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        if (this.getPid() == ((Product) obj).pid) {
+            return true;
+        } else {
+            return super.equals(obj);
+        }
+
     }
 }
