@@ -112,7 +112,7 @@ public class Main {
         long productID;
         // Validate product input
         while (true) {
-            System.out.print("Enter product ID to see comments: ");
+            System.out.print("Enter product ID to select a product: ");
             productID = readInt();
             Product p = new Product(productID);
             if (productID > 0 && products.contains(p)) {

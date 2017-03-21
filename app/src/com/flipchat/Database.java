@@ -55,8 +55,8 @@ public class Database {
      */
     public int addProduct(String title, String description, BigDecimal price, long userID, long categoryID) {
 
-        String selectSQL = "INSERT INTO product (title, description, price, image, is_sold, datetime, expiry, u_id, cat_id, bid_id) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String selectSQL = "INSERT INTO product (title, description, price, image, is_sold, datetime, expiry, u_id, " +
+                "cat_id, bid_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement ps = conn.prepareStatement(selectSQL)) {
             ps.setString(1, title);
@@ -85,7 +85,8 @@ public class Database {
     public ArrayList<Category> getCategories() {
 
         ArrayList<Category> results = new ArrayList<>();
-        String selectSQL = "SELECT * FROM category ORDER BY cat_id";
+        String selectSQL = "SELECT cat_id, name, description, product_count, user_count, created_by " +
+                "FROM category ORDER BY cat_id";
 
         try (
                 PreparedStatement ps =  this.conn.prepareStatement(selectSQL);
@@ -115,7 +116,8 @@ public class Database {
      */
     public ArrayList<Product> getCategoryProducts(long catID) {
         ArrayList<Product> results = new ArrayList<>();
-        String selectSQL = "SELECT * FROM product WHERE cat_id = ? ORDER BY datetime DESC";
+        String selectSQL = "SELECT p_id, title, description, price::numeric, image, is_sold, datetime, " +
+                "expiry, u_id, cat_id, bid_id FROM product WHERE cat_id = ? ORDER BY datetime DESC";
 
         try (PreparedStatement ps =  this.conn.prepareStatement(selectSQL)) {
             ps.setLong(1, catID);
@@ -134,8 +136,8 @@ public class Database {
      */
     public ArrayList<Product> getCommentProducts() {
         ArrayList<Product> results = new ArrayList<>();
-        String selectSQL = "SELECT p.p_id, p.title, p.description, p.price, p.image, p.is_sold, p.datetime, p.expiry, " +
-                "p.u_id, p.cat_id, p.bid_id FROM product p, comment c WHERE p.p_id = c.p_id";
+        String selectSQL = "SELECT p.p_id, p.title, p.description, p.price::numeric, p.image, p.is_sold, p.datetime, " +
+                "p.expiry, p.u_id, p.cat_id, p.bid_id FROM product p, comment c WHERE p.p_id = c.p_id";
 
         try (PreparedStatement ps =  this.conn.prepareStatement(selectSQL)) {
             this.getProducts(results, ps);
@@ -154,7 +156,8 @@ public class Database {
      */
     public ArrayList<Product> getUserProducts(long userID) {
         ArrayList<Product> results = new ArrayList<>();
-        String selectSQL = "SELECT * FROM product WHERE u_id = ?";
+        String selectSQL = "SELECT p_id, title, description, price::numeric, image, is_sold, datetime, " +
+                "expiry, u_id, cat_id, bid_id FROM product WHERE u_id = ?";
 
         try (PreparedStatement ps =  this.conn.prepareStatement(selectSQL)) {
             ps.setLong(1, userID);
@@ -237,7 +240,7 @@ public class Database {
                 product.setPid(resultSet.getLong("p_id"));
                 product.setTitle(resultSet.getString("title"));
                 product.setDescription(resultSet.getString("description"));
-                product.setPrice(resultSet.getDouble("price"));
+                product.setPrice(resultSet.getBigDecimal("price"));
                 product.setImage(resultSet.getString("image"));
                 product.setSold(resultSet.getBoolean("is_sold"));
                 product.setDate(resultSet.getDate("datetime"));
