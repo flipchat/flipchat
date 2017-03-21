@@ -4,7 +4,10 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
- * Created by Alister on 2017-03-13.
+ * Data class representing a product
+ *
+ * @author Alex Ilea, Jonathan Lucuix-Andre, Kevin Tran, Zain, Virani
+ * @version 1.0
  */
 public class Product {
 
@@ -25,6 +28,10 @@ public class Product {
         super();
     }
 
+    /**
+     * Custom constructor allowing to create dummy product for easy ArrayList search
+     * @param pid
+     */
     public Product(long pid) {
         this.pid = pid;
     }
@@ -117,6 +124,12 @@ public class Product {
         this.bidID = bidID;
     }
 
+    /**
+     * Simple equals method, comparing only on product ID
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

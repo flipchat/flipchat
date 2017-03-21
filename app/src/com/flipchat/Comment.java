@@ -3,7 +3,10 @@ package com.flipchat;
 import java.sql.Date;
 
 /**
- * Created by Alister on 2017-03-20.
+ * Data class representing a comment
+ *
+ * @author Alex Ilea, Jonathan Lucuix-Andre, Kevin Tran, Zain, Virani
+ * @version 1.0
  */
 public class Comment {
     private long cid;

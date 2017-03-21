@@ -9,7 +9,10 @@ import java.util.Scanner;
  * Entry point for Flipchat application
  *
  * Shows a text-based menu to the user and executes database queries
- * according to selected option
+ * according to selected option.
+ *
+ * @author Alex Ilea, Jonathan Lucuix-Andre, Kevin Tran, Zain, Virani
+ * @version 1.0
  */
 public class Main {
 
@@ -50,6 +53,7 @@ public class Main {
                     BigDecimal price = validateAmount("Enter product price: ");
 
                     db.addProduct(title, desc, price, userID, catID);
+                    System.out.printf("Congrats! %s was added to category %d!", title, catID);
                     break;
                 // Get my products (posted by current user)
                 case 3:
@@ -59,17 +63,12 @@ public class Main {
                 case 4:
                     // Get categories
                     showCategoryList(categories);
-
                     // Get products for selected category
                     catID = validateCategoryID(categories);
-
                     ArrayList<Product> catProducts = db.getCategoryProducts(catID);
                     showProductList(catProducts);
-
                     productID = validateProductID(catProducts);
-
                     BigDecimal bidAmount = validateAmount("Enter a bid for product " + productID + ": ");
-
                     db.placeBid(userID, productID, bidAmount);
                     System.out.printf("Congrats! You placed %s on product %d", formatCurrency(bidAmount), productID);
                     break;
@@ -78,9 +77,7 @@ public class Main {
                     // Get product comments
                     ArrayList<Product> commentProducts = db.getCommentProducts();
                     showProductList(commentProducts);
-
                     productID = validateProductID(commentProducts);
-
                     showCommentList(db.getComments(productID));
                     break;
                 // Exit
@@ -95,6 +92,13 @@ public class Main {
 
     }
 
+    /**
+     * Helper method to validate category ID.
+     * Stay in the loop, until user provides a valid category or exits the app.
+     *
+     * @param categories
+     * @return catID
+     */
     public static long validateCategoryID(ArrayList<Category> categories) {
         long catID;
         // Validate category input
@@ -108,6 +112,13 @@ public class Main {
         }
     }
 
+    /**
+     * Helper method to validate product ID.
+     * Stay in the loop, until user provides a valid product or exits the app.
+     *
+     * @param products
+     * @return productID
+     */
     public static long validateProductID(ArrayList<Product> products) {
         long productID;
         // Validate product input
@@ -123,6 +134,13 @@ public class Main {
     }
 
 
+    /**
+     * Helper method to validate input amount.
+     * Stay in the loop, until user provides a valid amount or exits the app.
+     *
+     * @param message input prompt
+     * @return amount entered
+     */
     public static BigDecimal validateAmount(String message) {
         // Validate product input
         while(true) {
