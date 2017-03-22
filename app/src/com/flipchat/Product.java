@@ -1,16 +1,20 @@
 package com.flipchat;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
- * Created by Alister on 2017-03-13.
+ * Data class representing a product
+ *
+ * @author Alex Ilea, Jonathan Lucuix-Andre, Kevin Tran, Zain, Virani
+ * @version 1.0
  */
 public class Product {
 
     private long pid;
     private String title;
     private String description;
-    private double price;
+    private BigDecimal price;
     private String image;
     private boolean isSold;
     private Date date;
@@ -22,6 +26,14 @@ public class Product {
 
     public Product() {
         super();
+    }
+
+    /**
+     * Custom constructor allowing to create dummy product for easy ArrayList search
+     * @param pid
+     */
+    public Product(long pid) {
+        this.pid = pid;
     }
 
     public long getPid() {
@@ -48,11 +60,11 @@ public class Product {
         this.description = description;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -110,5 +122,28 @@ public class Product {
 
     public void setBidID(long bidID) {
         this.bidID = bidID;
+    }
+
+    /**
+     * Simple equals method, comparing only on product ID
+     *
+     * @param obj
+     * @return
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        if (this.getPid() == ((Product) obj).pid) {
+            return true;
+        } else {
+            return super.equals(obj);
+        }
+
     }
 }

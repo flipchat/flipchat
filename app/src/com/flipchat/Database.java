@@ -8,12 +8,21 @@ import java.util.Calendar;
 import java.util.Properties;
 
 /**
- * Created by Alister on 2017-03-13.
+ * Data Access implementation for FlipChat database
+ *
+ * @author Alex Ilea, Jonathan Lucuix-Andre, Kevin Tran, Zain, Virani
+ * @version 1.0
  */
 public class Database {
 
     private Connection conn;
 
+    /**
+     * Public constructor.
+     *
+     * Read database credentials from properties file and
+     * attempt to connect to the database.
+     */
     public Database() {
 
         try {
@@ -34,10 +43,50 @@ public class Database {
 
     }
 
+    /**
+     * Add a new product to the products table
+     *
+     * @param title
+     * @param description
+     * @param price
+     * @param userID
+     * @param categoryID
+     * @return 0 or 1 for success, -1 for failure
+     */
+    public int addProduct(String title, String description, BigDecimal price, long userID, long categoryID) {
+
+        String selectSQL = "INSERT INTO product (title, description, price, image, is_sold, datetime, expiry, u_id, " +
+                "cat_id, bid_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (PreparedStatement ps = conn.prepareStatement(selectSQL)) {
+            ps.setString(1, title);
+            ps.setString(2, description);
+            ps.setBigDecimal(3, price);
+            ps.setString(4, "http://dummyimage.com/250x250.jpg/dddddd/000000");
+            ps.setBoolean(5, false);
+            ps.setTimestamp(6, new Timestamp(Calendar.getInstance().getTimeInMillis()));
+            ps.setTimestamp(7, new Timestamp(Calendar.getInstance().getTimeInMillis()));
+            ps.setLong(8, userID);
+            ps.setLong(9, categoryID);
+            ps.setLong(10, 0);
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return -1;
+    }
+
+    /**
+     * Return all categories from category table
+     *
+     * @return categories list
+     */
     public ArrayList<Category> getCategories() {
 
         ArrayList<Category> results = new ArrayList<>();
-        String selectSQL = "SELECT * FROM category ORDER BY cat_id";
+        String selectSQL = "SELECT cat_id, name, description, product_count, user_count, created_by " +
+                "FROM category ORDER BY cat_id";
 
         try (
                 PreparedStatement ps =  this.conn.prepareStatement(selectSQL);
@@ -59,29 +108,20 @@ public class Database {
         return results;
     }
 
-    public ArrayList<Product> getCategoryProducts(int catID) {
+    /**
+     * Return all products that belong to a specific category
+     *
+     * @param catID
+     * @return product list
+     */
+    public ArrayList<Product> getCategoryProducts(long catID) {
         ArrayList<Product> results = new ArrayList<>();
-        String selectSQL = "SELECT * FROM product WHERE cat_id = ?";
+        String selectSQL = "SELECT p_id, title, description, price::numeric, image, is_sold, datetime, " +
+                "expiry, u_id, cat_id, bid_id FROM product WHERE cat_id = ? ORDER BY datetime DESC";
 
         try (PreparedStatement ps =  this.conn.prepareStatement(selectSQL)) {
-            ps.setInt(1, catID);
-            try (ResultSet resultSet = ps.executeQuery()) {
-                while (resultSet.next()) {
-                    Product product = new Product();
-                    product.setPid(resultSet.getLong("p_id"));
-                    product.setTitle(resultSet.getString("title"));
-                    product.setDescription(resultSet.getString("description"));
-                    product.setPrice(resultSet.getDouble("price"));
-                    product.setImage(resultSet.getString("image"));
-                    product.setSold(resultSet.getBoolean("is_sold"));
-                    product.setDate(resultSet.getDate("datetime"));
-                    product.setExpiry(resultSet.getDate("expiry"));
-                    product.setUserID(resultSet.getLong("u_id"));
-                    product.setCatID(resultSet.getLong("cat_id"));
-                    product.setBidID(resultSet.getLong("bid_id"));
-                    results.add(product);
-                }
-            }
+            ps.setLong(1, catID);
+            this.getProducts(results, ps);
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -89,22 +129,92 @@ public class Database {
         return results;
     }
 
-    public int addProduct(String title, String description, BigDecimal price, long userID, long categoryID) {
+    /**
+     * Return all products that have comments
+     *
+     * @return product list
+     */
+    public ArrayList<Product> getCommentProducts() {
+        ArrayList<Product> results = new ArrayList<>();
+        String selectSQL = "SELECT p.p_id, p.title, p.description, p.price::numeric, p.image, p.is_sold, p.datetime, " +
+                "p.expiry, p.u_id, p.cat_id, p.bid_id FROM product p, comment c WHERE p.p_id = c.p_id";
 
-        String selectSQL = "INSERT INTO product (title, description, price, image, is_sold, datetime, expiry, u_id, cat_id, bid_id) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement ps =  this.conn.prepareStatement(selectSQL)) {
+            this.getProducts(results, ps);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return results;
+    }
+
+
+    /**
+     * Return products posted by a given user
+     * @param userID
+     * @return product list
+     */
+    public ArrayList<Product> getUserProducts(long userID) {
+        ArrayList<Product> results = new ArrayList<>();
+        String selectSQL = "SELECT p_id, title, description, price::numeric, image, is_sold, datetime, " +
+                "expiry, u_id, cat_id, bid_id FROM product WHERE u_id = ?";
+
+        try (PreparedStatement ps =  this.conn.prepareStatement(selectSQL)) {
+            ps.setLong(1, userID);
+            this.getProducts(results, ps);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return results;
+    }
+
+    /**
+     * Return a list of comments for a particular product
+     *
+     * @param productID
+     * @return comment list
+     */
+    public ArrayList<Comment> getComments(long productID) {
+        ArrayList<Comment> results = new ArrayList<>();
+        String selectSQL = "SELECT c_id, content, datetime FROM comment WHERE p_id = ?";
+
+        try (PreparedStatement ps =  this.conn.prepareStatement(selectSQL)) {
+            ps.setLong(1, productID);
+            try (ResultSet resultSet = ps.executeQuery();) {
+                while (resultSet.next()) {
+                    Comment comment = new Comment();
+                    comment.setCid(resultSet.getLong("c_id"));
+                    comment.setContent(resultSet.getString("content"));
+                    comment.setDatetime(resultSet.getDate("datetime"));
+                    results.add(comment);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return results;
+    }
+
+    /**
+     * Add a bid record placed by a specific user on a given product with a specific amont
+     *
+     * @param userID
+     * @param productID
+     * @param bidAmount
+     * @return 0 or 1 for success, -1 for failure
+     */
+    public int placeBid(long userID, long productID, BigDecimal bidAmount) {
+
+        String selectSQL = "INSERT INTO bid (datetime, price, u_id, p_id) VALUES (?, ?, ?, ?)";
+
 
         try (PreparedStatement ps = conn.prepareStatement(selectSQL)) {
-            ps.setString(1, title);
-            ps.setString(2, description);
-            ps.setBigDecimal(3, price);
-            ps.setString(4, "http://dummyimage.com/250x250.jpg/dddddd/000000");
-            ps.setBoolean(5, false);
-            ps.setTimestamp(6, new Timestamp(Calendar.getInstance().getTimeInMillis()));
-            ps.setTimestamp(7, new Timestamp(Calendar.getInstance().getTimeInMillis()));
-            ps.setLong(8, userID);
-            ps.setLong(9, categoryID);
-            ps.setLong(10, 0);
+            ps.setTimestamp(1, new Timestamp(Calendar.getInstance().getTimeInMillis()));
+            ps.setBigDecimal(2, bidAmount);
+            ps.setLong(3, userID);
+            ps.setLong(4, productID);
             return ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -113,35 +223,36 @@ public class Database {
         return -1;
     }
 
-    public ArrayList<Product> getUserProducts(long userID) {
-        ArrayList<Product> results = new ArrayList<>();
-        String selectSQL = "SELECT * FROM product WHERE u_id = ?";
+    /**
+     * Build product list based on the results of an executed query.
+     * Used internally by Database methods.
+     *
+     * @param results
+     * @param ps
+     * @return product list
+     * @throws SQLException
+     */
+    private ArrayList<Product> getProducts(ArrayList<Product> results, PreparedStatement ps) throws SQLException {
 
-        try (PreparedStatement ps =  this.conn.prepareStatement(selectSQL)) {
-            ps.setLong(1, userID);
-            try (ResultSet resultSet = ps.executeQuery();) {
-                while (resultSet.next()) {
-                    Product product = new Product();
-                    product.setPid(resultSet.getLong("p_id"));
-                    product.setTitle(resultSet.getString("title"));
-                    product.setDescription(resultSet.getString("description"));
-                    product.setPrice(resultSet.getDouble("price"));
-                    product.setImage(resultSet.getString("image"));
-                    product.setSold(resultSet.getBoolean("is_sold"));
-                    product.setDate(resultSet.getDate("datetime"));
-                    product.setExpiry(resultSet.getDate("expiry"));
-                    product.setUserID(resultSet.getLong("u_id"));
-                    product.setCatID(resultSet.getLong("cat_id"));
-                    product.setBidID(resultSet.getLong("bid_id"));
-                    results.add(product);
-                }
+        try (ResultSet resultSet = ps.executeQuery();) {
+            while (resultSet.next()) {
+                Product product = new Product();
+                product.setPid(resultSet.getLong("p_id"));
+                product.setTitle(resultSet.getString("title"));
+                product.setDescription(resultSet.getString("description"));
+                product.setPrice(resultSet.getBigDecimal("price"));
+                product.setImage(resultSet.getString("image"));
+                product.setSold(resultSet.getBoolean("is_sold"));
+                product.setDate(resultSet.getDate("datetime"));
+                product.setExpiry(resultSet.getDate("expiry"));
+                product.setUserID(resultSet.getLong("u_id"));
+                product.setCatID(resultSet.getLong("cat_id"));
+                product.setBidID(resultSet.getLong("bid_id"));
+                results.add(product);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
 
         return results;
     }
-
 
 }
