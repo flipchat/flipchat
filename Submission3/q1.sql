@@ -1,7 +1,7 @@
 CREATE OR REPLACE FUNCTION FIXBID (product_id INT)
 RETURNS void AS $what$
    DECLARE
-    b_id MONEY;
+    b_id INT;
     b_price MONEY;
     p_price MONEY;
     at_end INT;
@@ -17,12 +17,14 @@ RETURNS void AS $what$
             END IF;
             BEGIN
             IF (b_price < p_price)
-                THEN UPDATE bid SET price = p_price WHERE bid_id = b_id;
+              THEN UPDATE bid SET price = p_price WHERE bid_id = b_id;
             END IF;
             FETCH C1 INTO b_id, b_price;
-            EXCEPTION WHEN SQLSTATE '02000' THEN at_end := 1;
+              EXCEPTION WHEN SQLSTATE '02000' THEN at_end := 1; RETURN;
             END;
         END LOOP;
         CLOSE C1;
     END;
   $what$ LANGUAGE plpgsql;
+
+SELECT FIXBID(29);
