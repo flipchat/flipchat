@@ -1,36 +1,38 @@
-cs421=> CREATE OR REPLACE FUNCTION FIXBID (product_id INT)
-cs421-> RETURNS void AS $what$
+cs421=> CREATE OR REPLACE FUNCTION updateHighestBid (product_id INT)
+cs421-> RETURNS INT AS $what$
 cs421$>   DECLARE
 cs421$>   b_id INT;
 cs421$>   b_price MONEY;
 cs421$>   p_price MONEY;
-cs421$>   at_end INT;
+cs421$>   max_b_id INT;
+cs421$>   max_amount MONEY;
 cs421$>   DECLARE C1 CURSOR FOR
 cs421$>     SELECT bid_id, price FROM bid WHERE p_id = product_id;
 cs421$>   BEGIN
 cs421$>         SELECT price INTO p_price FROM product where p_id = product_id;
 cs421$>         OPEN C1;
 cs421$>         FETCH C1 INTO b_id, b_price;
-cs421$>         at_end := 0;
+cs421$>         max_amount := 0;
+cs421$>         max_b_id := 0;
 cs421$>         LOOP
-cs421$>             IF at_end = 1 THEN RETURN;
-cs421$>             END IF;
 cs421$>             BEGIN
-cs421$>               IF (b_price < p_price)
-cs421$>                 THEN UPDATE bid SET price = p_price WHERE bid_id = b_id;
+cs421$>               IF (b_price > max_amount)
+cs421$>                 THEN max_amount := b_price; max_b_id := b_id;
 cs421$>               END IF;
 cs421$>               FETCH C1 INTO b_id, b_price;
 cs421$>               EXIT WHEN NOT FOUND;
 cs421$>             END;
 cs421$>         END LOOP;
 cs421$>         CLOSE C1;
+cs421$>         UPDATE product SET bid_id = max_b_id WHERE p_id = product_id;
+cs421$>         RETURN max_b_id;
 cs421$>   END;
 cs421$>   $what$ LANGUAGE plpgsql;
 CREATE FUNCTION
-cs421=> SELECT FIXBID(61);
- fixbid 
---------
- 
+cs421=> SELECT updateHighestBid(61);
+ updatehighestbid 
+------------------
+              125
 (1 row)
 
 cs421=> 
