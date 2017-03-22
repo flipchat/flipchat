@@ -1,10 +1,10 @@
 package com.flipchat;
 
-import java.sql.*;
-import java.util.ArrayList;
-
 /**
- * Created by Alister on 2017-03-12.
+ * Data class representing a category
+ *
+ * @author Alex Ilea, Jonathan Lucuix-Andre, Kevin Tran, Zain, Virani
+ * @version 1.0
  */
 public class Category {
 
