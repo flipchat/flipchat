@@ -1,3 +1,11 @@
+--
+-- COMP 421: Submission 03
+-- Question 01
+-- Group 40
+--
+
+-- Looks at all bids of a certain product and see if their own amounts are at least their products listed price.
+-- If not, update their amount to be their product's listed amount.
 CREATE OR REPLACE FUNCTION FIXBID (product_id INT)
 RETURNS void AS $what$
   DECLARE
@@ -27,4 +35,5 @@ RETURNS void AS $what$
   END;
   $what$ LANGUAGE plpgsql;
 
-SELECT FIXBID(29);
+-- Fixes the bids for product 61
+SELECT FIXBID(61);

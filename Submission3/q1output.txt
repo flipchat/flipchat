@@ -1,0 +1,36 @@
+cs421=> CREATE OR REPLACE FUNCTION FIXBID (product_id INT)
+cs421-> RETURNS void AS $what$
+cs421$>   DECLARE
+cs421$>   b_id INT;
+cs421$>   b_price MONEY;
+cs421$>   p_price MONEY;
+cs421$>   at_end INT;
+cs421$>   DECLARE C1 CURSOR FOR
+cs421$>     SELECT bid_id, price FROM bid WHERE p_id = product_id;
+cs421$>   BEGIN
+cs421$>         SELECT price INTO p_price FROM product where p_id = product_id;
+cs421$>         OPEN C1;
+cs421$>         FETCH C1 INTO b_id, b_price;
+cs421$>         at_end := 0;
+cs421$>         LOOP
+cs421$>             IF at_end = 1 THEN RETURN;
+cs421$>             END IF;
+cs421$>             BEGIN
+cs421$>               IF (b_price < p_price)
+cs421$>                 THEN UPDATE bid SET price = p_price WHERE bid_id = b_id;
+cs421$>               END IF;
+cs421$>               FETCH C1 INTO b_id, b_price;
+cs421$>               EXIT WHEN NOT FOUND;
+cs421$>             END;
+cs421$>         END LOOP;
+cs421$>         CLOSE C1;
+cs421$>   END;
+cs421$>   $what$ LANGUAGE plpgsql;
+CREATE FUNCTION
+cs421=> SELECT FIXBID(61);
+ fixbid 
+--------
+ 
+(1 row)
+
+cs421=> 
