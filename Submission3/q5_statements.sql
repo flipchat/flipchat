@@ -16,3 +16,5 @@ $newProduct$ LANGUAGE plpgsql;
 -- When a new product is inserted, call the procedure update_category()
 CREATE TRIGGER update_cat AFTER INSERT ON product
     FOR EACH ROW EXECUTE PROCEDURE update_category();
+
+INSERT INTO product (title, description, price, is_sold, datetime, expiry, u_id, cat_id) VALUES ('the other shoe', 'comes with 2 laces', 421, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 75, 4);
