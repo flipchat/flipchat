@@ -1,4 +1,10 @@
--- increase the appropriate category count and create a notification for subscribers of that category
+--
+-- COMP 421: Submission 03
+-- Question 05
+-- Group 40
+--
+
+-- Increase the appropriate category count and create a notification for subscribers of that category
 CREATE OR REPLACE FUNCTION update_category() RETURNS trigger AS $newProduct$
     BEGIN
         UPDATE category SET product_count = product_count + 1 WHERE cat_id = NEW.cat_id;
@@ -7,6 +13,6 @@ CREATE OR REPLACE FUNCTION update_category() RETURNS trigger AS $newProduct$
     END;
 $newProduct$ LANGUAGE plpgsql;
 
--- when a new product is inserted, call the procedure update_category()
+-- When a new product is inserted, call the procedure update_category()
 CREATE TRIGGER update_cat AFTER INSERT ON product
     FOR EACH ROW EXECUTE PROCEDURE update_category();
