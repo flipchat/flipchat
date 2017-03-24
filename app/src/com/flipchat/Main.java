@@ -181,10 +181,11 @@ public class Main {
 
     public static void showProductList(ArrayList<Product> products) {
         System.out.println();
-        System.out.format("%3s | %-20s | %-20s | %-20s\n", "ID", "Product", "Price", "Expires");
-        System.out.println("=================================================================");
+        System.out.format("%3s | %-25s | %-35s | %-10s | %-20s\n", "ID", "Product", "Description", "Price", "Expires");
+        System.out.println("==============================================================================================");
         for (Product p : products) {
-            System.out.format("%3s | %-20s | %-20s | %-20s\n", p.getPid(), p.getTitle(), p.getPrice(), p.getExpiry());
+            System.out.format("%3s | %-25s | %-35s | %-10s | %-20s\n", p.getPid(), truncate(p.getTitle(), 25),
+                    truncate(p.getDescription(), 35), p.getPrice(), p.getExpiry());
         }
         System.out.println();
     }
@@ -201,10 +202,10 @@ public class Main {
 
     public static void showCommentList(ArrayList<Comment> comments) {
         System.out.println();
-        System.out.format("%3s | %-20s | %-20s\n", "ID", "Datetime", "Datetime");
+        System.out.format("%3s | %-12s | %-30s\n", "ID", "Date", "Comment");
         System.out.println("=================================================================");
         for (Comment c : comments) {
-            System.out.format("%3d | %-20s | %-20s\n", c.getCid(), c.getDatetime(), c.getContent());
+            System.out.format("%3d | %-12s | %-30s\n", c.getCid(), c.getDatetime(), truncate(c.getContent(), 30));
         }
         System.out.println();
     }
@@ -231,5 +232,19 @@ public class Main {
         return NumberFormat.getCurrencyInstance().format(amount);
     }
 
+
+    /**
+     * Truncates a string to fit in the output table
+     * @param input
+     * @param maxLength
+     * @return
+     */
+    public static String truncate(String input, int maxLength) {
+        if (input.length() <= maxLength) {
+            return input;
+        } else {
+            return input.substring(0, maxLength - 3) + "...";
+        }
+    }
 
 }
