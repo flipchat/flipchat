@@ -136,8 +136,8 @@ public class Database {
      */
     public ArrayList<Product> getCommentProducts() {
         ArrayList<Product> results = new ArrayList<>();
-        String selectSQL = "SELECT p.p_id, p.title, p.description, p.price::numeric, p.image, p.is_sold, p.datetime, " +
-                "p.expiry, p.u_id, p.cat_id, p.bid_id FROM product p, comment c WHERE p.p_id = c.p_id";
+        String selectSQL = "SELECT DISTINCT p.p_id, p.title, p.description, p.price::numeric, p.image, p.is_sold, p.datetime, " +
+                "p.expiry, p.u_id, p.cat_id, p.bid_id FROM product p, comment c WHERE p.p_id = c.p_id ORDER BY p_id";
 
         try (PreparedStatement ps =  this.conn.prepareStatement(selectSQL)) {
             this.getProducts(results, ps);
@@ -157,7 +157,7 @@ public class Database {
     public ArrayList<Product> getUserProducts(long userID) {
         ArrayList<Product> results = new ArrayList<>();
         String selectSQL = "SELECT p_id, title, description, price::numeric, image, is_sold, datetime, " +
-                "expiry, u_id, cat_id, bid_id FROM product WHERE u_id = ?";
+                "expiry, u_id, cat_id, bid_id FROM product WHERE u_id = ? ORDER BY p_id";
 
         try (PreparedStatement ps =  this.conn.prepareStatement(selectSQL)) {
             ps.setLong(1, userID);
@@ -177,7 +177,7 @@ public class Database {
      */
     public ArrayList<Comment> getComments(long productID) {
         ArrayList<Comment> results = new ArrayList<>();
-        String selectSQL = "SELECT c_id, content, datetime FROM comment WHERE p_id = ?";
+        String selectSQL = "SELECT c_id, content, datetime FROM comment WHERE p_id = ? ORDER BY datetime DESC";
 
         try (PreparedStatement ps =  this.conn.prepareStatement(selectSQL)) {
             ps.setLong(1, productID);

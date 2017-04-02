@@ -1,0 +1,179 @@
+>java -jar q2_app.jar
+
+Welcome to Flipchat!
+========================================
+1) Show new products
+2) Add a new product
+3) Show user products
+4) Place a bid
+5) Get product comments
+6) Exit
+
+Please choose an option: 1
+
+ ID | Category
+=================================================================
+  1 | Electronics
+  2 | Home
+  3 | Books
+  4 | Clothing
+  5 | Sporting Goods
+  6 | Toys
+  7 | Musical Instruments
+  8 | Cars
+  9 | Accessories
+ 10 | Art
+
+Enter category ID to select a category: 1
+
+ ID | Product                   | Description                         | Price      | Expires
+==============================================================================================
+121 | Samsung TV                | 50 inches display. Cracked scree... | 400.00     | 2017-03-23
+119 | Macbook Air               | Barely used Macbook Air             | 799.99     | 2017-03-22
+ 56 | iPhone 6S 64GB            | Slightly used iPhone, still on w... | 555.99     | 2017-01-28
+ 74 | Calculator                | Can calculate your calculations ... | 15.60      | 2016-08-06
+ 96 | LG Smart Watch            | Tells time!                         | 250.00     | 2016-07-07
+ 95 | Nexus 5                   | Good condition                      | 99.99      | 2016-06-05
+
+
+
+Welcome to Flipchat!
+========================================
+1) Show new products
+2) Add a new product
+3) Show user products
+4) Place a bid
+5) Get product comments
+6) Exit
+
+Welcome to Flipchat!
+========================================
+1) Show new products
+2) Add a new product
+3) Show user products
+4) Place a bid
+5) Get product comments
+6) Exit
+
+Please choose an option: 2
+
+ ID | Category
+=================================================================
+  1 | Electronics
+  2 | Home
+  3 | Books
+  4 | Clothing
+  5 | Sporting Goods
+  6 | Toys
+  7 | Musical Instruments
+  8 | Cars
+  9 | Accessories
+ 10 | Art
+
+Enter category ID to select a category: 4
+Enter product title: Baseball cap
+Enter product description: Brand new NY Yankees baseball cap (with tags)
+Enter product price: 24.99
+Congrats! Baseball cap was added to category 4!
+
+Welcome to Flipchat!
+========================================
+1) Show new products
+2) Add a new product
+3) Show user products
+4) Place a bid
+5) Get product comments
+6) Exit
+
+Please choose an option: 3
+
+ ID | Product                   | Description                         | Price      | Expires
+==============================================================================================
+ 88 | Motorola RAZR V3          | Can still make calls                | 65.87      | 2017-01-16
+117 | Harry Potter Book         | Nice book, good condition           | 10.00      | 2017-03-21
+118 | Leather Coat              | Gucci leather coat, brand new       | 999.99     | 2017-03-21
+119 | Macbook Air               | Barely used Macbook Air             | 799.99     | 2017-03-22
+121 | Samsung TV                | 50 inches display. Cracked scree... | 400.00     | 2017-03-23
+122 | Chair                     | To sit on                           | 20.00      | 2017-03-23
+123 | Pants                     | Levis pants, barely worn            | 23.00      | 2017-03-23
+124 | Baseball cap              | Brand new NY Yankees baseball ca... | 24.99      | 2017-03-23
+
+
+
+Welcome to Flipchat!
+========================================
+1) Show new products
+2) Add a new product
+3) Show user products
+4) Place a bid
+5) Get product comments
+6) Exit
+
+Please choose an option: 4
+
+ ID | Category
+=================================================================
+  1 | Electronics
+  2 | Home
+  3 | Books
+  4 | Clothing
+  5 | Sporting Goods
+  6 | Toys
+  7 | Musical Instruments
+  8 | Cars
+  9 | Accessories
+ 10 | Art
+
+Enter category ID to select a category: 1
+
+ ID | Product                   | Description                         | Price      | Expires
+==============================================================================================
+121 | Samsung TV                | 50 inches display. Cracked scree... | 400.00     | 2017-03-23
+119 | Macbook Air               | Barely used Macbook Air             | 799.99     | 2017-03-22
+ 56 | iPhone 6S 64GB            | Slightly used iPhone, still on w... | 555.99     | 2017-01-28
+ 74 | Calculator                | Can calculate your calculations ... | 15.60      | 2016-08-06
+ 96 | LG Smart Watch            | Tells time!                         | 250.00     | 2016-07-07
+ 95 | Nexus 5                   | Good condition                      | 99.99      | 2016-06-05
+
+Enter product ID to select a product: 119
+Enter a bid for product 119: 820
+Congrats! You placed $820.00 on product 119
+
+Welcome to Flipchat!
+========================================
+1) Show new products
+2) Add a new product
+3) Show user products
+4) Place a bid
+5) Get product comments
+6) Exit
+
+Please choose an option: 5
+
+ ID | Product                   | Description                         | Price      | Expires
+==============================================================================================
+ 56 | iPhone 6S 64GB            | Slightly used iPhone, still on w... | 555.99     | 2017-01-28
+ 74 | Calculator                | Can calculate your calculations ... | 15.60      | 2016-08-06
+ 95 | Nexus 5                   | Good condition                      | 99.99      | 2016-06-05
+121 | Samsung TV                | 50 inches display. Cracked scree... | 400.00     | 2017-03-23
+
+Enter product ID to select a product: 95
+
+ ID | Date         | Comment
+=================================================================
+  2 | 2017-02-23   | Looks great
+  4 | 2017-02-21   | How old is it?
+
+Welcome to Flipchat!
+========================================
+1) Show new products
+2) Add a new product
+3) Show user products
+4) Place a bid
+5) Get product comments
+6) Exit
+
+Please choose an option: 6
+Bye-bye!
+
+Process finished with exit code 0
