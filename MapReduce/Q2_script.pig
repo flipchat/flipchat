@@ -14,8 +14,7 @@ fltrd = FILTER raw by votes > 100;
 SPLIT fltrd INTO winners IF elected == 1, losers IF elected == 0;
 
 -- Join winners and losers by date of election, election type, parliament type, province and riding
-result = JOIN winners BY date, losers BY date;
-result = FILTER result BY winners::type == losers::type AND winners::parl == losers::parl AND winners::prov == losers::prov AND winners::riding == losers::riding;
+result = JOIN winners BY (date, type, parl, prov, riding), losers BY (date, type, parl, prov, riding);
 
 -- Project lastnames of winner and loser and the vote difference
 result = FOREACH result GENERATE winners::lastname, losers::lastname, (winners::votes - losers::votes) AS votediff;
