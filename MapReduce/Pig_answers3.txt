@@ -1,6 +1,17 @@
-What does the schema look like immediately after the group by? Is is nested or flat?
-	It is nested (entries are tuples with 2 values: 1 is the parliament number and 2 is a  multiset of tuples representing entries
+--
+-- COMP 421: Assignment 4 - MapReduce
+-- Question 03
+-- Group 40
+--
+------------------------------------------------------------------------------------
+
+1. What does the schema look like immediately after the group by? Is is nested or flat?
+
+	It is nested (entries are tuples with 2 values: 1 is the parliament number and 2 is a multiset of tuples representing entries
 	of candidates who won a general election).
-	
-How long did your query run?
+
+2. How long did your query run?
+
 	The Pig script completed in 49 seconds and 826 milliseconds (49826 ms).
+
+------------------------------------------------------------------------------------
