@@ -17,7 +17,7 @@ grp = GROUP fltrd BY parl;
 parl_count = FOREACH grp GENERATE ($0) as Parliament, COUNT($1) as parliament_count;
 
 -- Project parliament number and party
-party_info = FOREACH raw GENERATE parl,party;
+party_info = FOREACH fltrd GENERATE parl,party;
 
 -- Join the parliament counts with the raw data
 jn = JOIN parl_count BY Parliament, party_info BY parl;
