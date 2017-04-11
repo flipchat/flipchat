@@ -32,7 +32,7 @@ result = FOREACH grpd Generate
 		 MAX(jn.parliament_count) AS parl_count;
 
 -- Print results to screen
-dump result;
+DUMP result;
 
 -- Store the results into 'q4'
-store result into 'q4' using PigStorage(',');
+STORE result INTO 'q4' using PigStorage(',');
